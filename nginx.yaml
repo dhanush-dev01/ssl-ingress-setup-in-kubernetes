@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-basic-pro-deployment
+  namespace: ingress-nginx
+  labels:
+    app: react-basic-pro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-basic-pro
+  template:
+    metadata:
+      labels:
+        app: react-basic-pro
+    spec:
+      containers:
+        - name: react-basic-pro
+          image: hypervision201/allen-ai
+          ports:
+            - containerPort: 80
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-basic-pro-service
+  namespace: ingress-nginx
+spec:
+  selector:
+    app: react-basic-pro
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
